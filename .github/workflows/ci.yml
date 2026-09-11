@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift build -c release
+      - name: Test
+        run: swift test
+      # Smoke test against a real signed system binary. Exercises the fat
+      # parser and the whole check pipeline on something we did not build,
+      # which is the actual use case.
+      - name: Inspect a system binary
+        run: |
+          ./.build/release/machoscope --all /bin/ls || true
+          ./.build/release/machoscope --format json /bin/ls > /tmp/report.json || true
+          python3 -c "
+          import json
+          r = json.load(open('/tmp/report.json'))
+          assert r['slices'], 'no slices parsed'
+          ids = {f['id'] for s in r['slices'] for f in s['findings']}
+          assert 'pie' in ids and 'code-signature' in ids, f'missing checks: {ids}'
+          print(f\"parsed {len(r['slices'])} slice(s), {len(ids)} distinct checks\")
+          "
