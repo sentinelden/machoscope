@@ -1,4 +1,4 @@
-// ChecksTests.swift — the grading rules.
+// ChecksTests.swift: the grading rules.
 //
 // These construct Slice values directly rather than compiling binaries,
 // because the point is the decision logic, not the parsing. Parsing is covered

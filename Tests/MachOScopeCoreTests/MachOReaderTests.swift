@@ -1,4 +1,4 @@
-// MachOReaderTests.swift — parsing, checked against real binaries on the host.
+// MachOReaderTests.swift: parsing, checked against real binaries on the host.
 //
 // These use system binaries rather than checked-in fixtures. The trade is
 // deliberate: a checked-in binary is opaque to review and goes stale, while

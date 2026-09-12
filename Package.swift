@@ -1,10 +1,10 @@
 // swift-tools-version: 5.9
 //
-// machoscope — inspect a Mach-O binary's hardening posture.
+// machoscope: inspect a Mach-O binary's hardening posture.
 //
 // Two targets, same split as any tool that wants to be usable as a library:
-//   1. `MachOScopeCore` — parsing and checks, importable from other tools.
-//   2. `machoscope` — the CLI, which is only argument parsing and rendering.
+//   1. `MachOScopeCore`: parsing and checks, importable from other tools.
+//   2. `machoscope`: the CLI, which is only argument parsing and rendering.
 
 import PackageDescription
 

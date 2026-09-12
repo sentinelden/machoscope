@@ -1,9 +1,9 @@
-// Checks.swift — the hardening checks and how they are graded.
+// Checks.swift: the hardening checks and how they are graded.
 //
 // A deliberate constraint runs through this file: every check reports what is
 // *observable in the binary*, and says so plainly when the observation is
 // indirect. Several widely-used binary "security scorers" report inferred
-// properties as though they were facts — the most common being stack canaries,
+// properties as though they were facts, the most common being stack canaries,
 // which cannot be observed directly at all and are inferred from the presence
 // of an imported `__stack_chk_fail`. That inference is usually right and
 // occasionally wrong (a binary with no arrays that need protecting will not
@@ -137,7 +137,7 @@ public enum Inspector {
                       detail: "Imports __stack_chk_fail, which the compiler emits when stack protection is enabled.")
             : Finding(id: "stack-canaries", title: "Stack canaries", status: .warn,
                       confidence: .inferred,
-                      detail: "No __stack_chk_fail import. Usually means stack protection is off — but a binary with no stack buffers to protect will not import it either, so this is a prompt to check the build settings, not proof.",
+                      detail: "No __stack_chk_fail import. Usually means stack protection is off, but a binary with no stack buffers to protect will not import it either, so this is a prompt to check the build settings, not proof.",
                       remediation: "Confirm -fstack-protector-strong is in effect (ENABLE_STACK_PROTECTOR for Xcode targets).")
     }
 
@@ -174,7 +174,7 @@ public enum Inspector {
         slice.hasCodeSignature
             ? Finding(id: "code-signature", title: "Code signature", status: .pass,
                       confidence: .observed,
-                      detail: "LC_CODE_SIGNATURE present. Note: presence is observed here, validity is not — run `codesign --verify` for that.")
+                      detail: "LC_CODE_SIGNATURE present. Note: presence is observed here, validity is not; run `codesign --verify` for that.")
             : Finding(id: "code-signature", title: "Code signature", status: .fail,
                       confidence: .observed,
                       detail: "No LC_CODE_SIGNATURE load command; the image is unsigned.",
@@ -219,7 +219,7 @@ public enum Inspector {
     static func riskyImports(_ slice: Slice) -> Finding? {
         // Functions with no bounds checking. Their presence is not a
         // vulnerability, but it is where one would be, and they are trivially
-        // replaceable — which is why this is a warning rather than noise.
+        // replaceable: which is why this is a warning rather than noise.
         //
         // Matching is exact, which matters more than it looks: under
         // _FORTIFY_SOURCE the compiler emits `__strcpy_chk` instead of
@@ -237,7 +237,7 @@ public enum Inspector {
         let advice = found.map { "\($0) → \(replacements[$0]!)" }.joined(separator: ", ")
         return Finding(id: "risky-imports", title: "Unbounded string functions", status: .warn,
                        confidence: .observed,
-                       detail: "Imports \(found.joined(separator: ", ")) — no bounds checking, and each has a safe counterpart.",
+                       detail: "Imports \(found.joined(separator: ", ")), no bounds checking, and each has a safe counterpart.",
                        remediation: "Replace: \(advice).")
     }
 }

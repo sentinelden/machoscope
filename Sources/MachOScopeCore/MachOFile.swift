@@ -1,4 +1,4 @@
-// MachOFile.swift — read the structure of a Mach-O image.
+// MachOFile.swift: read the structure of a Mach-O image.
 //
 // Scope note: this parses what the hardening checks need and no more. It is
 // not a general Mach-O library and does not try to be one. Load commands it
@@ -7,7 +7,7 @@
 // future toolchain cannot break it.
 //
 // Every read is bounds-checked. The whole point of this tool is pointing it at
-// binaries you did not build — a vendor SDK, an app pulled off a device — so a
+// binaries you did not build (a vendor SDK, an app pulled off a device) so a
 // malformed header has to produce an error, never an out-of-bounds read.
 
 import Foundation
@@ -66,7 +66,7 @@ public struct Slice: Sendable {
     public let sections: [String]
 
     public let hasCodeSignature: Bool
-    /// Non-zero `cryptid` in `LC_ENCRYPTION_INFO(_64)` — App Store FairPlay.
+    /// Non-zero `cryptid` in `LC_ENCRYPTION_INFO(_64)`: App Store FairPlay.
     public let isEncrypted: Bool
     public let minimumOSVersion: String?
     public let sdkVersion: String?
@@ -76,17 +76,17 @@ public struct Slice: Sendable {
     // Named for what they mean rather than the constant, since the constant
     // names are not self-explanatory.
 
-    /// MH_PIE — the image can be loaded at a random base address, which is
+    /// MH_PIE: the image can be loaded at a random base address, which is
     /// what makes ASLR effective for it.
     public var isPositionIndependent: Bool { flags & 0x0020_0000 != 0 }
 
-    /// MH_ALLOW_STACK_EXECUTION — explicitly requests an executable stack.
+    /// MH_ALLOW_STACK_EXECUTION: explicitly requests an executable stack.
     public var allowsStackExecution: Bool { flags & 0x0002_0000 != 0 }
 
-    /// MH_NO_HEAP_EXECUTION — opts the heap out of being executable.
+    /// MH_NO_HEAP_EXECUTION: opts the heap out of being executable.
     public var deniesHeapExecution: Bool { flags & 0x0100_0000 != 0 }
 
-    /// MH_BINDS_TO_WEAK — the image has weak symbol bindings.
+    /// MH_BINDS_TO_WEAK: the image has weak symbol bindings.
     public var bindsToWeak: Bool { flags & 0x0001_0000 != 0 }
 }
 
@@ -174,7 +174,7 @@ public enum MachOReader {
 
             case 0xc, 0xd, 0x18, 0x1f, 0x20:
                 // LC_LOAD_DYLIB, LC_ID_DYLIB, LC_LOAD_WEAK_DYLIB,
-                // LC_REEXPORT_DYLIB, LC_LAZY_LOAD_DYLIB — all dylib_command,
+                // LC_REEXPORT_DYLIB, LC_LAZY_LOAD_DYLIB, all dylib_command,
                 // whose name offset sits at +8.
                 if cmd != 0xd, let name = lcString(data, command: cursor, size: size, swap: swap) {
                     libraries.append(name)

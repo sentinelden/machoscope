@@ -1,4 +1,4 @@
-// MachOScope.swift — CLI entry point.
+// MachOScope.swift: CLI entry point.
 //
 // Not named main.swift: a file with that name is treated as top-level code,
 // which is incompatible with @main.
