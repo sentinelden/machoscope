@@ -13,7 +13,7 @@ import ArgumentParser
 import Foundation
 import MachOScopeCore
 
-let toolVersion = "0.1.0"
+let toolVersion = "0.1.1"
 
 @main
 struct MachOScope: ParsableCommand {

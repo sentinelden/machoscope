@@ -9,7 +9,7 @@
 ```
 $ machoscope ./build/MyApp.app
 
-machoscope 0.1.0 · MyApp
+machoscope 0.1.1 · MyApp
 
   arm64 · executable · min OS 17.0.0
   ──────────────────────────────────────────────────────────────
