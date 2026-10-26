@@ -73,7 +73,7 @@ final class ChecksTests: XCTestCase {
     }
 
     /// Under _FORTIFY_SOURCE the compiler emits __strcpy_chk, which IS
-    /// bounds-checked. Flagging it would penalise code that did the right
+    /// bounds-checked. Flagging it would penalize code that did the right
     /// thing.
     func testFortifiedVariantIsNotFlagged() {
         XCTAssertNil(Inspector.riskyImports(slice(imports: ["__strcpy_chk", "__sprintf_chk"])))

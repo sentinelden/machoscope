@@ -32,7 +32,7 @@ The tooling for this is aging Python (`otool` wrappers and abandoned GUI apps) a
 
 **This one says when it is guessing.** Stack canaries cannot be observed directly in a Mach-O image; every tool that reports them is inferring from an imported `__stack_chk_fail`. That inference is usually right and occasionally wrong. Findings here carry a confidence, and `(inferred)` is printed next to the ones that are deductions rather than reads. A tool that tells you it is guessing is more useful than one that is confidently wrong, especially when someone is about to make a shipping decision from its output.
 
-**It does not cry wolf.** Dylibs and bundles are position-independent by construction, so MH_PIE is meaningless for them. Reporting "no PIE" on every framework is the most common false positive in this category, and it trains people to ignore the tool. Under `_FORTIFY_SOURCE` the compiler emits `__strcpy_chk`, which *is* bounds-checked, so it is not flagged. Both behaviours have tests.
+**It does not cry wolf.** Dylibs and bundles are position-independent by construction, so MH_PIE is meaningless for them. Reporting "no PIE" on every framework is the most common false positive in this category, and it trains people to ignore the tool. Under `_FORTIFY_SOURCE` the compiler emits `__strcpy_chk`, which *is* bounds-checked, so it is not flagged. Both behaviors have tests.
 
 **It is one Swift binary.** No Python, no runtime, no `pip install`. It runs in a CI container and on a locked-down build machine.
 

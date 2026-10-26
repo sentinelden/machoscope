@@ -2,8 +2,8 @@
 //
 // Scope note: this parses what the hardening checks need and no more. It is
 // not a general Mach-O library and does not try to be one. Load commands it
-// does not recognise are skipped by their recorded size rather than being
-// modelled, which keeps the parser small and means an unfamiliar command in a
+// does not recognize are skipped by their recorded size rather than being
+// modeled, which keeps the parser small and means an unfamiliar command in a
 // future toolchain cannot break it.
 //
 // Every read is bounds-checked. The whole point of this tool is pointing it at
